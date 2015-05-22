@@ -7,7 +7,9 @@ Requires Adafruit_GFX and RTClib libraries.
 
 Forked from the TIMESQUARE Watch https://github.com/adafruit/TIMESQUARE-Watch
 
-Requires additional faceplate. Laser cut or 3D print based on provided vector file.
+Requires additional faceplate. Laser cut or 3D print based on provided vector file. 
+
+Thanks Dano for vector file, lasercut and 3D print work!
 
 Learn more about this project at http://andydoro.com/wordclockwristwatch/
 
