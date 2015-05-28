@@ -1,6 +1,8 @@
 /*
  WORD CLOCK 
  by Andy Doro
+  
+ http://andydoro.com/wordclockwristwatch/
  
  
  grid pattern

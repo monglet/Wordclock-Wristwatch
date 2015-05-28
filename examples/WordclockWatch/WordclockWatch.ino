@@ -1,4 +1,10 @@
 /*
+ Extra wordclock mode added. Requires faceplate- laser/vinyl cut or 3D print.
+
+ http://andydoro.com/wordclockwristwatch/
+*/
+ 
+/*
 INTERACTING WITH WATCH:
  - A button 'tap' is a quick press (a second or less).
  - A button 'hold' is a long press (1.5 seconds or longer).
