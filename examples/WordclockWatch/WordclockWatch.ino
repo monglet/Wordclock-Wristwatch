@@ -77,10 +77,12 @@ void setup() {
   Wire.begin();
   RTC.begin();
 
-  DateTime now = RTC.now();
+  //DateTime now = RTC.now();
+
   // If clock is unset, set it to compile time and jump to time-setting mode
-  if((now.year() == 2000) && (now.month()  == 1) && (now.day()    == 1) &&
-    (now.hour() == 0   ) && (now.minute() == 0) && (now.second() <  8)) {
+  if (! RTC.isrunning()) {
+    Serial.println("RTC is NOT running!");
+    // following line sets the RTC to the date & time this sketch was compiled
     RTC.adjust(DateTime(__DATE__, __TIME__));
     mode = MODE_SET;
   }
