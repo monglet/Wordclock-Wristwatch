@@ -1,26 +1,26 @@
 /*
- WORD CLOCK 
+ WORD CLOCK
  by Andy Doro
-  
+
  http://andydoro.com/wordclockwristwatch/
- 
- 
+
+
  grid pattern
- 
+
  A T W E N T Y D
- Q U A R T E R Y 
+ Q U A R T E R Y
  F I V E H A L F
  D P A S T O R O
  F I V E I G H T
  S I X T H R E E
  T W E L E V E N
  F O U R N I N E
- 
- 
+
+
  TO DO:
- 
- *fix fadeout? 
- 
+
+ *fix fadeout?
+
  */
 
 //#define FLASHDELAY 500
@@ -57,26 +57,21 @@ byte b = 255;
 
 void mode_wordclock(uint8_t action) {
 
-  //DateTime now;
-
-  if(action != ACTION_NONE) {
+  if (action != ACTION_NONE) {
     // If we just arrived here (whether through mode change
     // or wake from sleep), initialize the matrix driver:
 
     //fps = watch.setDisplayMode(6, LED_PLEX_4, true);
-    if(action >= ACTION_HOLD_LEFT) {
+    if (action >= ACTION_HOLD_LEFT) {
       uint8_t depth = 6, plex = LED_PLEX_4;
       // Reduce depth/plex if battery voltage is low
-      if(watch.getmV() < BATT_LOW_MV) {
+      if (watch.getmV() < BATT_LOW_MV) {
         depth = 2;
         plex  = LED_PLEX_1;
       }
       // Reconfigure display if needed
-      if((watch.getDepth() != depth) || (watch.getPlex() != plex))
+      if ((watch.getDepth() != depth) || (watch.getPlex() != plex))
         fps = watch.setDisplayMode(depth, plex, true);
-
-      // get time from the RTC
-      //DateTime now = RTC.now();
     }
 
 
@@ -90,7 +85,6 @@ void mode_wordclock(uint8_t action) {
 
 
   displayTime();
-  //delay(100); // don't need to update very often...
 
 }
 

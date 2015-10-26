@@ -7,7 +7,8 @@
 #define BIT_SET  255
 
 void mode_binary(uint8_t action) {
-  DateTime now;
+  //DateTime now;
+  DateTime theTime = calculateTime(); // takes into account DST
   uint8_t  h, x, bit, b_set, b_clear, depth;
   uint16_t t;
 
@@ -30,12 +31,12 @@ void mode_binary(uint8_t action) {
     watch.setTimeout(fps * 8);
   }
 
-  now = RTC.now();
-  h   = now.hour();
+  //now = RTC.now();
+  h   = theTime.hour();
   if     (h  > 12) h -= 12;
   else if(h ==  0) h  = 12;
-  loadDigits(now.minute(), DIGIT_MIN0);
-  loadDigits(now.second(), DIGIT_SEC0);
+  loadDigits(theTime.minute(), DIGIT_MIN0);
+  loadDigits(theTime.second(), DIGIT_SEC0);
 
   // Calc set/clear colors based on current fadeout value
   depth = watch.getDepth();

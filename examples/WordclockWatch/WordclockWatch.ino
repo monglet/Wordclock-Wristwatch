@@ -2,19 +2,21 @@
  Extra wordclock mode added. Requires faceplate- laser/vinyl cut or 3D print.
 
  http://andydoro.com/wordclockwristwatch/
+
+ Compile as LilyPad Arduino with ATmega328
 */
- 
+
 /*
 INTERACTING WITH WATCH:
  - A button 'tap' is a quick press (a second or less).
  - A button 'hold' is a long press (1.5 seconds or longer).
  - Watch will usually start up in time-setting mode.
- 
+
  TIME SET MODE:
  - Tap right button to increase value of current digit.
  - Tap left button to advance to next digit.
  - Hold both buttons to switch to time display mode.
- 
+
  TIME DISPLAY MODE:
  - Hold left or right button to switch forward/back between clocks.
  - Some (but not all) clocks may use left or right button tap to
@@ -68,16 +70,23 @@ int     curX;
 // Used by various display modes for smooth fade-out before sleep
 const uint8_t PROGMEM
 fade[] =
-{  
+{
   0,  1,  1,  2,  4,  5,  8, 10, 13, 17, 22, 27, 32, 39, 46,
-  53, 62, 71, 82, 93,105,117,131,146,161,178,196,214,234,255 };
+  53, 62, 71, 82, 93, 105, 117, 131, 146, 161, 178, 196, 214, 234, 255
+};
 
 Watch      watch(2, LED_PLEX_1, true);
 RTC_DS1307 RTC;
 uint8_t    mode      = MODE_WORDCLOCK,   // start on wordclock mode
-mode_last = MODE_MARQUEE;
+           mode_last = MODE_MARQUEE;
 boolean    h24       = false; // 24-hour display mode
 uint16_t   fps       = 100;
+
+// Do you live in a country or territory that observes Daylight Saving Time? 
+// https://en.wikipedia.org/wiki/Daylight_saving_time_by_country
+// Use 1 if you observe DST, 0 if you don't. This is programmed for DST in the US / Canada. If your territory's DST operates differently, 
+// you'll need to modify the code in the calcTheTime() function to make this work properly.
+#define OBSERVE_DST 1
 
 void setup() {
   Wire.begin();
@@ -90,6 +99,11 @@ void setup() {
     Serial.println("RTC is NOT running!");
     // following line sets the RTC to the date & time this sketch was compiled
     RTC.adjust(DateTime(__DATE__, __TIME__));
+    // DST? If we're in it, let's subtract an hour from the RTC time to keep our DST calculation correct. This gives us
+    // Standard Time which our DST check will add an hour back to if we're in DST.
+    DateTime theTime = RTC.now();
+    theTime = theTime.unixtime() - 3600; // If we're not in DST right now, just comment this out!
+    RTC.adjust(theTime);
     mode = MODE_SET;
   }
   watch.begin();
@@ -108,28 +122,28 @@ void setup() {
 void loop() {
 
   uint8_t a = watch.action();
-  if(a == ACTION_HOLD_BOTH) {
-    if(mode == MODE_SET) {
+  if (a == ACTION_HOLD_BOTH) {
+    if (mode == MODE_SET) {
       // Exit time setting, return to last used display mode
       set();
       mode = mode_last;
-    } 
+    }
     else {
       // Save current display mode, switch to time setting
       mode_last = mode;
       mode      = MODE_SET;
     }
-  } 
-  else if(a == ACTION_HOLD_RIGHT) {
-    if(mode != MODE_SET) {
+  }
+  else if (a == ACTION_HOLD_RIGHT) {
+    if (mode != MODE_SET) {
       // Switch to next display mode (w/wrap)
-      if(++mode >= N_MODES) mode = 1;
+      if (++mode >= N_MODES) mode = 1;
     }
-  } 
-  else if(a == ACTION_HOLD_LEFT) {
-    if(mode != MODE_SET) {
+  }
+  else if (a == ACTION_HOLD_LEFT) {
+    if (mode != MODE_SET) {
       // Switch to prior display mode (w/wrap)
-      if(--mode < 1) mode = N_MODES - 1;
+      if (--mode < 1) mode = N_MODES - 1;
     }
   }
 
@@ -138,19 +152,19 @@ void loop() {
 }
 
 void blit(const uint8_t *img, int iw, int ih, int sx, int sy, int dx, int dy,
-int w, int h, uint8_t b) {
+          int w, int h, uint8_t b) {
   uint16_t b1;
   uint8_t  shift, x, y;
 
-  if((dx >= 8) || ((dx + w - 1) < 0)) return;  // Quick X-only clipping
+  if ((dx >= 8) || ((dx + w - 1) < 0)) return; // Quick X-only clipping
 
   b1    = (uint16_t)b + 1; // +1 so shift (rather than divide) can be used
   shift = 16 - watch.getDepth();
 
-  for(y=0; y<h; y++) {
-    for(x=0;x<w;x++) {
+  for (y = 0; y < h; y++) {
+    for (x = 0; x < w; x++) {
       watch.drawPixel(dx + x, dy + y,
-      ((uint8_t)pgm_read_byte(&img[(sy + y) * iw + sx + x]) * b1) >> shift);
+                      ((uint8_t)pgm_read_byte(&img[(sy + y) * iw + sx + x]) * b1) >> shift);
     }
   }
 }
