@@ -104,7 +104,7 @@ void setup() {
     DateTime theTime = RTC.now();
     theTime = theTime.unixtime() - 3600; // If we're not in DST right now, just comment this out!
     RTC.adjust(theTime);
-    mode = MODE_SET;
+    //mode = MODE_SET;
   }
   watch.begin();
 

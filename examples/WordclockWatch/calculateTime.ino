@@ -44,8 +44,6 @@ DateTime calculateTime() {
     }
   }
 
-  RTCTime = RTCTime.unixtime() + 150;  // add 2.5 minutes to give better five minute estimates.
-
   Serial.print(RTCTime.year(), DEC);
   Serial.print('/');
   Serial.print(RTCTime.month(), DEC);
