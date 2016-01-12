@@ -102,7 +102,11 @@ void setup() {
     // DST? If we're in it, let's subtract an hour from the RTC time to keep our DST calculation correct. This gives us
     // Standard Time which our DST check will add an hour back to if we're in DST.
     DateTime theTime = RTC.now();
-    theTime = theTime.unixtime() - 3600; // If we're not in DST right now, just comment this out!
+    if (OBSERVE_DST == 1) {
+      if (checkDst() == true) { // check whether we're in DST right now. If we are, subtract an hour.
+        theTime = theTime.unixtime() - 3600;
+      }
+    }
     RTC.adjust(theTime);
     //mode = MODE_SET;
   }
