@@ -7,6 +7,8 @@ This version adds an additional wordclock mode. Requires additional faceplate. L
 
 After downloading, rename folder to 'Watch' and install in Arduino Libraries folder. Restart Arduino IDE, then open File->Sketchbook->Library->Watch->Watch sketch.
 
+This version also adds automatic daylight saving time adjustment for the US and Canada!
+
 Requires Adafruit_GFX and RTClib libraries.
 
 Thanks Dano for vector file, lasercut and 3D print work!
