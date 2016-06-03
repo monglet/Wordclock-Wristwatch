@@ -18,6 +18,6 @@ Learn more about this project at http://andydoro.com/wordclockwristwatch/
 Note: It seems some of the code doesn't work with the latest Arduino IDE. 
 
 Use:
-Arduino 1.6.5
-RTClib 1.2.0
-Adafruit_GFX 1.1.3
+* Arduino 1.6.5
+* RTClib 1.2.0
+* Adafruit_GFX 1.1.3
