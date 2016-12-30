@@ -14,7 +14,10 @@
 #include <avr/pgmspace.h>
 #include <avr/power.h>
 #include <avr/sleep.h>
+#include "Adafruit_GFX.h"
 #include "Watch.h"
+
+#define watch_swap_int16_t(a, b) { int16_t t = a; a = b; b = t; }
 
 // This code looks ridiculous and requires quite a bit of explanation...
 
