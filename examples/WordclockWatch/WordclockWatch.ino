@@ -40,6 +40,12 @@ INTERACTING WITH WATCH:
 #define MODE_WORDCLOCK 4  // added new mode
 #define MODE_BATTERY 5
 
+void mode_set(uint8_t action);
+void mode_marquee(uint8_t action);
+void mode_binary(uint8_t action);
+void mode_moon(uint8_t action);
+void mode_wordclock(uint8_t action);
+void mode_battery(uint8_t action);
 
 void (*modeFunc[])(uint8_t) = {
   mode_set,
