@@ -17,10 +17,22 @@
 #include "Adafruit_GFX.h"
 #include "Watch.h"
 
+<<<<<<< HEAD
 
 #define watch_swap_int16_t(a, b) { int16_t t = a; a = b; b = t; }
 
 
+=======
+<<<<<<< HEAD
+
+#define watch_swap_int16_t(a, b) { int16_t t = a; a = b; b = t; }
+
+
+=======
+#define watch_swap_int16_t(a, b) { int16_t t = a; a = b; b = t; }
+
+>>>>>>> origin/master
+>>>>>>> origin/master
 // This code looks ridiculous and requires quite a bit of explanation...
 
 // First, some parts might be painful to read in that 'row' and 'column'
